@@ -22,7 +22,7 @@ Surprisingly, all these files are small enough to put on github for a couple cus
 For most of these files, the genome fasta sequences were grabbed from the UCSC Genome Browser at https://hgdownload.soe.ucsc.edu/goldenPath/${GENOME_VERSION}/, where ${GENOME_VERSION} is any of the version below except **mCalJac1**. Some of these genomes were updated from the Vertebrate Genome Project, which seeks to create complete rather than draft genome assemblies of all mammals on the planet, [Rhie et al. 2021](https://www.nature.com/articles/s41586-021-03451-0). These genomes have **VGP** and that naming version if there's an alternate naming scheme. The VGP is [pretty cool](https://vertebrategenomesproject.org) and they make good [genome assemblies](https://vgp.github.io/genomeark/).
 
 - rn6: [rat genome v6, BCM-Baylor version](https://www.nature.com/articles/nature02426)
-- rn7: [rat genome also called VGP mRatBN7.2](https://journals.physiology.org/doi/abs/10.1152/physiolgenomics.00017.2022),
+- rn7: [rat genome also called VGP mRatBN7.2](https://journals.physiology.org/doi/abs/10.1152/physiolgenomics.00017.2022)
 - rheMac8: [rhesus macaque v8](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac8/bigZips/)
 - rheMac10: [rhesus macaque v10](https://www.science.org/doi/10.1126/science.abc6617?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed)
 - mCalJac1: marmoset VGP genome, [fasta from the maternal assembly here](https://www.ncbi.nlm.nih.gov/assembly/GCA_011078405.1/)
