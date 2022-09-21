@@ -1,11 +1,13 @@
 # Custom ArchR genome and gene annotations
 ## by BaDoi Phan (badoi dot phan at pitt dot edu)
 
-# 0) Contribute
-Got another genome/gene annotation you want to add? make a [pull request](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/pulls) and upload your (zipped) files. Note the [GitHub size limits](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)<br />
-Got questions on how these custom genomes were made? put it in [issues](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/issues)
+# 1) Usage:
+```
+tbd
 
-# 1) Premise: 
+```
+
+# 2) Premise: 
 Not all of single-cell ATAC-seq biomedical molecular epigenetics is done in human and mouse genomes where there are 
 high quality genomes and gene annotations. For the other species that are still highly relevant to study health and disease, 
 here are some ArchR annotations to enable less frustration to have snATAC-seq data analyzed with [ArchR](https://www.archrproject.com). 
@@ -17,10 +19,10 @@ Similarly, much work by the ENCODE Consortium has found with the large human and
 
 # 3) list of resources by file name
 Surprisingly, all these files are small enough to put on github for a couple custom genomes. Below are the organizations 
-- \*.gtf.gz and \*.gff3.gz: the gzipped annotation from the higher quality annotations to the target genome using [liftoff](https://github.com/agshumate/Liftoff)
-- \*liftOver\*blacklist.v2.bed: the ENCODE regions to exclude from epigenomic analyses mapped to the target genome using [liftOver](https://genome-store.ucsc.edu)
-- \*ArchRGenome.R: the Rscript used to make the custom ArchR annotations
-- \*ArchR_annotations.rda: the R Data object that contains the *geneAnnotation* and *genomeAnnotation* objects to use with [ArchR::createArrowFiles()](https://www.archrproject.com/reference/createArrowFiles.html)
+- **\*.gtf.gz** and **\*.gff3.gz**: the gzipped annotation from the higher quality annotations to the target genome using [liftoff](https://github.com/agshumate/Liftoff)
+- **\*liftOver\*blacklist.v2.bed**: the ENCODE regions to exclude from epigenomic analyses mapped to the target genome using [liftOver](https://genome-store.ucsc.edu)
+- **\*ArchRGenome.R**: the Rscript used to make the custom ArchR annotations
+- **\*ArchR_annotations.rda**: the R Data object that contains the *geneAnnotation* and *genomeAnnotation* objects to use with [ArchR::createArrowFiles()](https://www.archrproject.com/reference/createArrowFiles.html)
 
 # 4) list of species/genomes/source files
 For most of these files, the genome fasta sequences were grabbed from the UCSC Genome Browser at https://hgdownload.soe.ucsc.edu/goldenPath/${GENOME_VERSION}/, where ${GENOME_VERSION} is any of the version below except **mCalJac1**. Some of these genomes were updated from the Vertebrate Genome Project, which seeks to create complete rather than draft genome assemblies of all mammals on the planet, [Rhie et al. 2021](https://www.nature.com/articles/s41586-021-03451-0). These genomes have **VGP** and that naming version if there's an alternate naming scheme. The VGP is [pretty cool](https://vertebrategenomesproject.org) and they make good [genome assemblies](https://vgp.github.io/genomeark/).
@@ -31,6 +33,9 @@ For most of these files, the genome fasta sequences were grabbed from the UCSC G
 - rheMac10: [rhesus macaque v10](https://www.science.org/doi/10.1126/science.abc6617?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed)
 - mCalJac1: marmoset VGP genome, [fasta from the maternal assembly here](https://www.ncbi.nlm.nih.gov/assembly/GCA_011078405.1/)
 
+# 5) Contribute
+Got another genome/gene annotation you want to add? make a [pull request](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/pulls) and upload your (zipped) files. Note the [GitHub size limits](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)<br />
+Got questions on how these custom genomes were made? put it in [issues](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/issues)
 
 ## Internal
 These files are a subset of resources at the CMU Computational Biology Department Lane Cluster at:
