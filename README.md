@@ -18,7 +18,7 @@ BiocManager::install("BSgenome.Mmulatta.UCSC.rheMac10")
 library(ArchR) ## assume already have this
 library(BSgenome.Mmulatta.UCSC.rheMac10)
 
-## load the Rdata object with the `geneAnnotation` and `genomeAnnotation` objects
+## load the Rdata file with the `geneAnnotation` and `genomeAnnotation` objects
 load("custom_ArchR_genomes_and_annotations/rheMac10/rheMac10_liftoff_GRCh38.p13_ArchR_annotations.rda") 
 
 ## make arrows w/ these custom annotations
