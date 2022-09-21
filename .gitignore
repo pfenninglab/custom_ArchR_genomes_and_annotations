@@ -5,3 +5,10 @@
 *.gff
 index
 
+bowtie2/
+chromap/
+GRCh38.p13/
+mm10/
+hg19/
+ref*/
+
