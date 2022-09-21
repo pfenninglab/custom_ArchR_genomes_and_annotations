@@ -31,7 +31,8 @@ myCustomArrows <- createArrowFiles(
 
 ## Do sciencing here ##
 
-exit()
+quit(save = 'no') #quietly
+
 ```
 
 # 2) Premise: 
