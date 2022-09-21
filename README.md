@@ -66,4 +66,4 @@ Got questions on how these custom genomes were made? put it in [issues](https://
 
 ## Internal
 These files are a subset of resources at the CMU Computational Biology Department Lane Cluster at:
-`/home/bnphan/resources/genomes`
+`/home/bnphan/resources/genomes`. Poke inside this directory to find the ArchR annotations that exist on this repo.
