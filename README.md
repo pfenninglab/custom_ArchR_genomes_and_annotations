@@ -13,7 +13,7 @@ Similarly, much work by the ENCODE Consortium has found with the large human and
 
 # 3) list of resources by file name
 Surprisingly, all these files are small enough to put on github for a couple custom genomes. Below are the organizations 
-- \*liftoff\*.gtf.gz and \*liftoff\*.gff3.gz: the gzipped annotation from the higher quality annotations to the target genome using [liftoff](https://github.com/agshumate/Liftoff)
+- \*.gtf.gz and \*.gff3.gz: the gzipped annotation from the higher quality annotations to the target genome using [liftoff](https://github.com/agshumate/Liftoff)
 - \*liftOver\*blacklist.v2.bed: the ENCODE regions to exclude from epigenomic analyses mapped to the target genome using [liftOver](https://genome-store.ucsc.edu)
 - \*ArchRGenome.R: the Rscript used to make the custom ArchR annotations
 - \*ArchR_annotations.rda: the R Data object that contains the *geneAnnotation* and *genomeAnnotation* objects to use with [ArchR::createArrowFiles()](https://www.archrproject.com/reference/createArrowFiles.html)
