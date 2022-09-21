@@ -2,7 +2,7 @@
 ## by BaDoi Phan (badoi dot phan at pitt dot edu)
 
 # 0) Contribute
-Got another genome/gene annotation you want to add? make a [pull request](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/pulls) and upload your (zipped) files<br />
+Got another genome/gene annotation you want to add? make a [pull request](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/pulls) and upload your (zipped) files. Note the [GitHub size limits](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)<br />
 Got questions on how these custom genomes were made? put it in [issues](https://github.com/pfenninglab/custom_ArchR_genomes_and_annotations/issues)
 
 # 1) Premise: 
