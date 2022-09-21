@@ -2,6 +2,8 @@
 ## by BaDoi Phan (badoi dot phan at pitt dot edu)
 
 # 1) Usage:
+Here is a minimum set of instructions for incorporating custom genome and gene annotations into the ArchR pipeline. Simply clone the repo, load the RData object and tell ArchR to use it. There's a package installation required from [Bioconductor](https://www.bioconductor.org) for `BSgenome` objects that ArchR uses for some of its computations like motif analyses. If the installation of these `BSgenome` objects stalls in R, use `wget` in the command line to get the `package-version.tar.gz` file from Bioconductor and use `R CMD INSTALL package-version.tar.gz` to install instead. This usage is demonstrated for the `rheMac10` genome.<br />
+
 ```
 ## clone this repo to get the ready to use annotation objects
 git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
@@ -9,11 +11,11 @@ git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
 ## start an R session
 R
 
-## install the BS Genome object for the custom genome of interest from Bioconductor, https://www.bioconductor.org
+## install the BS Genome object for the custom genome of interest from Bioconductor
 BiocManager::install("BSgenome.Mmulatta.UCSC.rheMac8")
 
 ## load the libraries
-library(ArchR)
+library(ArchR) ## assume already have this
 library(BSgenome.Mmulatta.UCSC.rheMac8)
 
 ## load the Rdata object with the `geneAnnotation` and `genomeAnnotation` objects
