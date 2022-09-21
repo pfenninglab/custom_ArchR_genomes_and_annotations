@@ -7,12 +7,21 @@ high quality genomes and gene annotations. For the other species that are still 
 here are some ArchR annotations to enable less frustration to have snATAC-seq data analyzed with [ArchR](https://www.archrproject.com). 
 
 # 2) Strategy for gene annotations:
-We can use the evolution of related mammalian species tend to have orthologous gene elements (TSS, exons, genes). For example, house mouse (**mus musculus**) is a median of 15.4MY diverged from the Norway rat (_rattus norvegicus_), with (TimeTree)[http://www.timetree.org]. Humans are a median of 28.9 MY diverged from rhesus macaques. To borrow the higher quality and more complete gene annotations, we can use a gene-aware method of lifting gene annotations from one genome to another, (liftoff, Shumate and Salzberg, 2021)[https://academic.oup.com/bioinformatics/article/37/12/1639/6035128]. For the source of "high quality" gene annotation, we use the NCBI Refseq annotations from the *hg38/GRCh38* and *mm10/GRCm38* annotations downloaded from the UCSC Genome browser.
+We can use the evolution of related mammalian species tend to have orthologous gene elements (TSS, exons, genes). For example, house mouse (**mus musculus**) is a median of 15.4MY diverged from the Norway rat (_rattus norvegicus_), with [TimeTree](http://www.timetree.org). Humans are a median of 28.9 MY diverged from rhesus macaques. To borrow the higher quality and more complete gene annotations, we can use a gene-aware method of lifting gene annotations from one genome to another, [liftoff, Shumate and Salzberg, 2021](https://academic.oup.com/bioinformatics/article/37/12/1639/6035128). For the source of "high quality" gene annotation, we use the NCBI Refseq annotations from the *hg38/GRCh38* and *mm10/GRCm38* annotations downloaded from the UCSC Genome browser. 
+
+Similarly, much work by the ENCODE Consortium has found with the large human and mouse epigenomic data that certain regions of the genome in these species have artifactual signals and need to be excluded from epigenomic analsyes, [Amemiya et al., 2021](https://www.nature.com/articles/s41598-019-45839-z). These regions were pulled from and human and mouse from [here](https://github.com/Boyle-Lab/Blacklist/) and used the liftOver to map to the target genomes below, for simplicity.
 
 # 3) list of resources by file name
-- *.R: likely the Rscript used to make the custom ArchR *geneAnnotation* and *genomeAnnotation* objects to use with (ArchR::createArrowFiles())[https://www.archrproject.com/reference/createArrowFiles.html]
+Surprisingly, all these files are small enough to put on github for a couple custom genomes. Below are the organizations 
+- \*liftoff\*.gtf.gz and \*liftoff\*.gff3.gz: the gzipped annotation from the higher quality annotations to the target genome using [liftoff](https://github.com/agshumate/Liftoff)
+- \*liftOver\*blacklist.v2.bed: the ENCODE regions to exclude from epigenomic analyses mapped to the target genome using [liftOver](https://genome-store.ucsc.edu)
+- \*ArchRGenome.R: the Rscript used to make the custom ArchR annotations
+- \*ArchR_annotations.rda: the R Data object that contains the *geneAnnotation* and *genomeAnnotation* objects to use with [ArchR::createArrowFiles()](https://www.archrproject.com/reference/createArrowFiles.html)
 
-
-# 4) list of species/genomes
-
+# 4) list of species/genomes/source files
+For most of these files, the genome fasta sequences were grabbed from the UCSC Genome Browser at https://hgdownload.soe.ucsc.edu/goldenPath/${GENOME_VERSION}/, where ${GENOME_VERSION} is any of the version below except **mCalJac1**.
+- rn6: [rat genome v6](https://www.nature.com/articles/nature02426)
+- rn7: [rat genome v7](https://journals.physiology.org/doi/abs/10.1152/physiolgenomics.00017.2022)
+- rheMac8: [rhesus macaque v8](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac8/bigZips/)
+- rheMac10: [rhesus macaque v10](https://www.science.org/doi/10.1126/science.abc6617?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed)
 
