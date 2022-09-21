@@ -3,8 +3,33 @@
 
 # 1) Usage:
 ```
-tbd
+## clone this repo to get the ready to use annotation objects
+git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
 
+## start an R session
+R
+
+## install the BS Genome object for the custom genome of interest from Bioconductor, https://www.bioconductor.org
+BiocManager::install("BSgenome.Mmulatta.UCSC.rheMac8")
+
+## load the libraries
+library(ArchR)
+library(BSgenome.Mmulatta.UCSC.rheMac8)
+
+## load the Rdata object with the `geneAnnotation` and `genomeAnnotation` objects
+load("rheMac10/rheMac10_liftoff_GRCh38.p13_ArchR_annotations.rda") 
+
+## make arrows w/ these custom annotations
+myCustomArrows <- createArrowFiles(
+  ..., ## fill this out w/ your sample relevant details
+  geneAnnotation = getGeneAnnotation, #
+  genomeAnnotation = getGenomeAnnotation,
+  ... # any other paramters
+)
+
+## Do sciencing here ##
+
+exit()
 ```
 
 # 2) Premise: 
