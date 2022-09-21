@@ -26,3 +26,8 @@ For most of these files, the genome fasta sequences were grabbed from the UCSC G
 - rheMac8: [rhesus macaque v8](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac8/bigZips/)
 - rheMac10: [rhesus macaque v10](https://www.science.org/doi/10.1126/science.abc6617?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed)
 - mCalJac1: marmoset VGP genome, [fasta from the maternal assembly here](https://www.ncbi.nlm.nih.gov/assembly/GCA_011078405.1/)
+
+
+## Internal
+These files are a subset of resources at the CMU Computational Biology Department Lane Cluster at:
+`/home/bnphan/resources/genomes`
