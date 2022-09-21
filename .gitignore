@@ -1,10 +1,22 @@
+## files to ignore
 *.tar.gz
 *.fa
+*.fai
 *.gtf
 *.gff3
 *.gff
 index
 
+## ignore STARsolo files
+Genome
+genome*
+exon*
+gene*
+SA*
+transcr*
+sjdb*
+
+## directories to ignore
 bowtie2/
 chromap/
 GRCh38.p13/
