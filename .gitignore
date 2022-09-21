@@ -1,10 +1,19 @@
 ## files to ignore
 *.tar.gz
 *.fa
+*.fa.gz
+*.fna
+*.fna.gz
 *.fai
+*.2bit
 *.gtf
-*.gff3
 *.gff
+*.gff3
+*.txDb
+*.sqlite
+*.txt
+*.chrom
+*.bed
 index
 
 ## ignore STARsolo files

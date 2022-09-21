@@ -17,9 +17,8 @@
 ## 
 ## use 
 
-PROJDIR=$SCRATCH/projects/macaque_snATAC-seq
 CELLRANGERDIR=$SCRATCH/src/cellranger-atac-1.2.0
-GENOMEDIR=$SCRATCH/resources/genomes
+GENOMEDIR=~/resources/genomes
 
 ########################
 # get the human genome
@@ -65,6 +64,11 @@ liftoff \
 -o $GENOMEDIR/rheMac8/rheMac8_liftoff_GRCh38.p13_RefSeq.gff3 \
 $GENOMEDIR/rheMac8/rheMac8.fa \
 $GENOMEDIR/GRCh38.p13/GCF_000001405.39_GRCh38.p13_genomic.fna
+
+# convert gff to gtf
+gffread $GENOMEDIR/rheMac8/rheMac8_liftoff_GRCh38.p13_RefSeq.gff3 \
+-FT -o $GENOMEDIR/rheMac8/rheMac8_liftoff_GRCh38.p13_RefSeq.gtf
+
 
 
 #################################################
