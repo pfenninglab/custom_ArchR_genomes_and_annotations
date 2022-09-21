@@ -12,11 +12,11 @@ git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
 R
 
 ## install the BS Genome object for the custom genome of interest from Bioconductor
-BiocManager::install("BSgenome.Mmulatta.UCSC.rheMac8")
+BiocManager::install("BSgenome.Mmulatta.UCSC.rheMac10")
 
 ## load the libraries
 library(ArchR) ## assume already have this
-library(BSgenome.Mmulatta.UCSC.rheMac8)
+library(BSgenome.Mmulatta.UCSC.rheMac10)
 
 ## load the Rdata object with the `geneAnnotation` and `genomeAnnotation` objects
 load("rheMac10/rheMac10_liftoff_GRCh38.p13_ArchR_annotations.rda") 
