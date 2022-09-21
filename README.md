@@ -24,8 +24,8 @@ load("custom_ArchR_genomes_and_annotations/rheMac10/rheMac10_liftoff_GRCh38.p13_
 ## make arrows w/ these custom annotations
 myCustomArrows <- createArrowFiles(
   ..., ## fill this out w/ your sample relevant details
-  geneAnnotation = getGeneAnnotation, #
-  genomeAnnotation = getGenomeAnnotation,
+  geneAnnotation = geneAnnotation,
+  genomeAnnotation = genomeAnnotation,
   ... # any other paramters
 )
 
