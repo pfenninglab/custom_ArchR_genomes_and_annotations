@@ -4,7 +4,8 @@
 # 0) Citation:
 If you find these resources useful for your custom snATAC genome and analyses, please cite the data at the following DOI. 
 ```
-Phan, BaDoi; Pfenning, Andreas (2022): Alternate gene annotations for rat, macaque, and marmoset for single cell RNA and ATAC analyses. Carnegie Mellon University. Dataset. https://doi.org/10.1184/R1/21176401.v1
+Phan, BaDoi; Pfenning, Andreas (2022): Alternate gene annotations for rat, macaque, and marmoset for single cell RNA and ATAC analyses. 
+Carnegie Mellon University. Dataset. https://doi.org/10.1184/R1/21176401.v1
 ```
 
 # 1) Usage:
