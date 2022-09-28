@@ -1,6 +1,10 @@
 # Custom ArchR genome and gene annotations
 ## by BaDoi Phan (badoi dot phan at pitt dot edu)
 
+# 0) Citation:
+If you find these resources useful for your custom snATAC genome and analyses, please cite the data at the following DOI. 
+```Phan, BaDoi; Pfenning, Andreas (2022): Alternate gene annotations for rat, macaque, and marmoset for single cell RNA and ATAC analyses. Carnegie Mellon University. Dataset. https://doi.org/10.1184/R1/21176401.v1```
+
 # 1) Usage:
 Here is a minimum set of instructions for incorporating custom genome and gene annotations into the ArchR pipeline. Simply clone the repo, load the RData object and tell ArchR to use it. There's a package installation required from [Bioconductor](https://www.bioconductor.org) for `BSgenome` objects that ArchR uses for some of its computations like motif analyses. If the installation of these `BSgenome` objects stalls in R, use `wget` in the command line to get the `package-version.tar.gz` file from Bioconductor and use `R CMD INSTALL package-version.tar.gz` to install instead. This usage is demonstrated for the `rheMac10` genome.<br />
 
