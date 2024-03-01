@@ -26,8 +26,8 @@ genome(chromSizes) <- "rn7"
 
 # to avoid ends of chromosomes tiled regions
 restrict = chromSizes
-start(restrict) = start(restrict)+1e6
-end(restrict) = end(restrict)-1e6
+start(restrict) = start(restrict)+7e5
+end(restrict) = end(restrict)-7e5
 
 blacklist = import(file.path(GENOMEDIR,'rn7_liftOver_mm10-blacklist.v2.bed'))
 blacklist = blacklist[!grepl('NW',seqnames(blacklist))]
