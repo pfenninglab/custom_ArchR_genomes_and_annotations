@@ -26,10 +26,5 @@ transcr*
 sjdb*
 
 ## directories to ignore
-bowtie2/
-chromap/
-GRCh38.p13/
-mm10/
-hg19/
-ref*/
+output/
 
