@@ -13,7 +13,8 @@ Cross-species genomics requires high-quality genome assemblies and gene annotati
 ## Source Data
 
 ### Source Genomes and Annotations
-Located in `config/source_genomes.tsv`:
+Links to genome sequence and gene annotations for human and mouse also located in `config/source_genomes.tsv`:
+
 
 | Genome | Version | Source | Annotation |
 |--------|---------|--------|------------|
@@ -22,19 +23,30 @@ Located in `config/source_genomes.tsv`:
 | Mouse | GRCm38/mm10 | [UCSC](https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz) | [GENCODE vM25](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.annotation.gtf.gz) |
 
 ### Target Genomes  
-Located in `config/target_genomes.tsv`:
+Links to genome sequence for target genomes also located in `config/target_genomes.tsv`:
 
-- Rhesus macaque (rheMac8, rheMac10)
-- Crab-eating macaque (macFas6)
-- Marmoset (mCalJac1, calJac4) 
-- Pig-tailed macaque (mMacNem1)
-- Norway rat (rn6, rn7)
-- Pig (susScr11)
+
+- Rhesus macaque
+  - rheMac8 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac8/bigZips/rheMac8.fa.gz))
+  - rheMac10 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac10/bigZips/rheMac10.fa.gz))
+- Crab-eating macaque
+  - macFas6 ([NCBI download](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/011/100/615/GCA_011100615.1_Macaca_fascicularis_6.0/GCA_011100615.1_Macaca_fascicularis_6.0_genomic.fna.gz))
+- Marmoset
+  - mCalJac1 ([VGP Genomeark download](https://s3.amazonaws.com/genomeark/species/Callithrix_jacchus/mCalJac1/assembly_curated/mCalJac1.mat.cur.20200212.fasta.gz))
+  - calJac4 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/calJac4/bigZips/calJac4.fa.gz))
+- Pig-tailed macaque
+  - mMacNem1 ([VGP Genomeark download](https://s3.amazonaws.com/genomeark/species/Macaca_nemestrina/mMacNem1/assembly_curated/mMacNem1.hap1.cur.20240610.fasta.gz))
+- Norway rat
+  - rn6 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rn6/bigZips/rn6.fa.gz))
+  - rn7 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rn7/bigZips/rn7.fa.gz))
+- Pig
+  - susScr11 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/susScr11/bigZips/susScr11.fa.gz))
 
 ## Output Structure
 
 Processed data is organized under `output/genomes/` with the following structure:
-
+The download utility below uses data from the source and target genome .tsv files
+to download the required genome and gene annotations for the runs.
 ```
 output/genomes/
 ├── {genome}/              # e.g., rheMac10/
@@ -42,6 +54,9 @@ output/genomes/
 │   └── annotations/      
 │       └── {genome}-{source}-{version}.gtf.gz  # Lifted annotations
 ```
+
+Running the liftoff wrapper will also create the mapping from human/mouse to the 
+target genomes. 
 
 Example for rheMac10:
 ```
@@ -58,6 +73,11 @@ rheMac10/
 ### Requirements
 - Install dependencies using provided conda environment:
 ```bash
+# clone the repository
+git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
+cd custom_ArchR_genomes_and_annotations
+
+# create conda environment from config file
 conda env create -f config/conda_environment.yml
 ```
 
@@ -65,7 +85,7 @@ conda env create -f config/conda_environment.yml
 
 1. Download source/target genomes:
 ```bash
-./scripts/download-genome.sh -g rheMac10 \
+bash scripts/download-genome.sh -g rheMac10 \
   -f https://hgdownload.soe.ucsc.edu/goldenPath/rheMac10/bigZips/rheMac10.fa.gz \
   -n gencode.v47.basic \
   -t https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/gencode.v47.basic.annotation.gtf.gz
@@ -73,7 +93,7 @@ conda env create -f config/conda_environment.yml
 
 2. Run Liftoff gene mapping:
 ```bash
-./scripts/liftoff-genes.sh -s hg38 -t rheMac10 -a gencode.v47.basic
+bash scripts/liftoff-genes.sh -s hg38 -t rheMac10 -a gencode.v47.basic
 ```
 
 ## Citations
@@ -86,6 +106,13 @@ If you use these resources, please cite:
 ```
 Phan, BaDoi; Pfenning, Andreas (2022): Alternate gene annotations for rat, macaque, and marmoset for single cell RNA and ATAC analyses.
 Carnegie Mellon University. Dataset. https://doi.org/10.1184/R1/21176401.v1
+```
+
+## Internal Usage
+If you are a Pfenning lab member with access to the Lane cluster, this repository
+and all final github files and intermediate files are located at
+```bash
+cd /home/bnphan/repos/custom_ArchR_genomes_and_annotations
 ```
 
 ## Contributing
