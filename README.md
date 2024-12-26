@@ -81,8 +81,11 @@ rheMac10/
 ## Usage
 
 ### Requirements
-- Install dependencies using provided conda environment:
+- Install this respository and dependencies using provided conda environment:
 ```bash
+git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
+cd custom_ArchR_genomes_and_annotations
+
 conda env create -f config/conda_environment.yml
 ```
 
