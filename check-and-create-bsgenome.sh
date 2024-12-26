@@ -34,21 +34,23 @@ for i in $(seq 2 $num_genomes); do
         continue
     fi
     
-    if Rscript -e "if('${pgk_name}' %in% rownames(installed.packages())) quit(status = 0) else quit(status = 1)"; then
-        echo "Package ${pgk_name} already installed, skipping..."
-    else
-        echo "Submitting job for genome: $genome"
-        # Uncomment the line below to actually submit the job
-        # sbatch --job-name="bsg_${genome}" 
-        bash scripts/make-bsgenome.sh \
-            -s "$species" \
-            -g "$genome" \
-            -f "$fasta_path" \
-            -n "$pgk_name" \
-            -w "$SCRATCH_DIR" \
-            -o "${GENOME_DIR}/${genome}" \
-            -p "$PROJECT_DIR"
+    if [[ "$pkg_name" == *"Custom"* ]]; then
+        if Rscript -e "if('${pgk_name}' %in% rownames(installed.packages())) quit(status = 0) else quit(status = 1)"; then
+            echo "Package ${pgk_name} already installed, skipping..."
+        else
+            echo "Submitting job for genome: $genome"
+            # Uncomment the line below to actually submit the job
+            sbatch --job-name="bsg_${genome}" scripts/make-bsgenome.sh \
+                -s "$species" \
+                -g "$genome" \
+                -f "$fasta_path" \
+                -n "$pgk_name" \
+                -w "$SCRATCH_DIR" \
+                -o "${GENOME_DIR}/${genome}" \
+                -p "$PROJECT_DIR"
+        fi
     fi
+    
 done
 
 echo "All BSgenome build jobs submitted"
