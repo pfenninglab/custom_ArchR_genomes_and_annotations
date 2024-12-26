@@ -6,7 +6,6 @@
 *.fna.gz
 *.fai
 *.2bit
-*.gtf
 *.gff
 *.gff3
 *.txDb
