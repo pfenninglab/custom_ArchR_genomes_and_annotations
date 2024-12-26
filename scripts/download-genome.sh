@@ -10,7 +10,7 @@ set -euo pipefail
 
 # Function to print usage
 usage() {
-    echo "Usage: $0 -g GENOME -f FASTA_URL [-p PROJECT_DIR] [-s SCRATCH_DIR] [-n GTF_NAME -t GTF_URL] [-b BLACKLIST_URL]" 1>&2
+    echo "Usage: $0 -g GENOME -f FASTA_URL [-p PROJECT_DIR] [-s SCRATCH_DIR] [-n GTF_NAME -t GTF_URL] [-b BLACKLIST_URL] [-l LIFTOVER_CHAINS]" 1>&2
     echo "Downloads and prepares genome files for analysis pipeline"
     echo ""
     echo "Required arguments:"
@@ -23,6 +23,7 @@ usage() {
     echo "  -n GTF_NAME      Name for GTF annotation (e.g. gencode.v39.basic)"
     echo "  -t GTF_URL       URL to gene annotation GTF file"
     echo "  -b BLACKLIST_URL URL to blacklist file"
+    echo "  -l LIFTOVER_CHAINS Comma-separated list of liftover chain URLs"
     echo "  -h               Show this help message"
     exit 1
 }
@@ -96,7 +97,7 @@ download_file() {
 }
 
 # Parse command line arguments
-while getopts "g:f:n:t:b:p:s:h" opt; do
+while getopts "g:f:n:t:b:p:s:l:h" opt; do
     case $opt in
         g) GENOME="$OPTARG" ;;
         f) FASTA_URL="$OPTARG" ;;
@@ -105,6 +106,7 @@ while getopts "g:f:n:t:b:p:s:h" opt; do
         b) BLACKLIST_URL="$OPTARG" ;;
         p) PROJECT_DIR="$OPTARG" ;;
         s) SCRATCH_DIR="$OPTARG" ;;
+        l) LIFTOVER_CHAINS="$OPTARG" ;;
         h) usage ;;
         ?) usage ;;
     esac
@@ -155,6 +157,20 @@ fi
 if [[ -n "${BLACKLIST_URL:-}" ]]; then
     BLACKLIST_FILE="$GENOME_DIR/${GENOME}_blacklist.bed.gz"
     download_file "$BLACKLIST_URL" "$BLACKLIST_FILE" "$GENOME"
+fi
+
+# Download liftover chains if provided
+if [[ -n "${LIFTOVER_CHAINS:-}" ]]; then
+    CHAIN_DIR="$GENOME_DIR/liftover"
+    mkdir -p "$CHAIN_DIR"
+    
+    IFS=',' read -ra CHAIN_URLS <<< "$LIFTOVER_CHAINS"
+    for chain_url in "${CHAIN_URLS[@]}"; do
+        # Extract filename from URL
+        chain_file=$(basename "$chain_url")
+        chain_path="$CHAIN_DIR/$chain_file"
+        download_file "$chain_url" "$chain_path" "chains"
+    done
 fi
 
 log "Genome download and preparation complete"
