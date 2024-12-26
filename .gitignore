@@ -26,5 +26,5 @@ transcr*
 sjdb*
 
 ## directories to ignore
-output/
-
+output/genomes/hg38/
+output/genomes/mm10/
