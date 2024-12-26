@@ -75,7 +75,7 @@ rheMac10/
 └── annotations/
     ├── rheMac10-hg38-gencode.v47.basic.gtf.gz
     ├── rheMac10-hg38-gencode.v47.comp.gtf.gz
-    └── rheMac10-mm10-gencode.vM25.basic.gtf.gz
+    └── rheMac10-mm10-gencode.v44.basic.gtf.gz
 ```
 
 ## Usage
