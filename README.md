@@ -13,8 +13,7 @@ Cross-species genomics requires high-quality genome assemblies and gene annotati
 ## Source Data
 
 ### Source Genomes and Annotations
-Links to genome sequence and gene annotations for human and mouse also located in `config/source_genomes.tsv`:
-
+Located in `config/source_genomes.tsv`:
 
 | Genome | Version | Source | Annotation |
 |--------|---------|--------|------------|
@@ -23,8 +22,7 @@ Links to genome sequence and gene annotations for human and mouse also located i
 | Mouse | GRCm38/mm10 | [UCSC](https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz) | [GENCODE vM25](https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M25/gencode.vM25.annotation.gtf.gz) |
 
 ### Target Genomes  
-Links to genome sequence for target genomes also located in `config/target_genomes.tsv`:
-
+Located in `config/target_genomes.tsv`:
 
 - Rhesus macaque
   - rheMac8 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rheMac8/bigZips/rheMac8.fa.gz))
@@ -32,10 +30,10 @@ Links to genome sequence for target genomes also located in `config/target_genom
 - Crab-eating macaque
   - macFas6 ([NCBI download](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/011/100/615/GCA_011100615.1_Macaca_fascicularis_6.0/GCA_011100615.1_Macaca_fascicularis_6.0_genomic.fna.gz))
 - Marmoset
-  - mCalJac1 ([VGP Genomeark download](https://s3.amazonaws.com/genomeark/species/Callithrix_jacchus/mCalJac1/assembly_curated/mCalJac1.mat.cur.20200212.fasta.gz))
+  - mCalJac1 ([Genomeark download](https://s3.amazonaws.com/genomeark/species/Callithrix_jacchus/mCalJac1/assembly_curated/mCalJac1.mat.cur.20200212.fasta.gz))
   - calJac4 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/calJac4/bigZips/calJac4.fa.gz))
 - Pig-tailed macaque
-  - mMacNem1 ([VGP Genomeark download](https://s3.amazonaws.com/genomeark/species/Macaca_nemestrina/mMacNem1/assembly_curated/mMacNem1.hap1.cur.20240610.fasta.gz))
+  - mMacNem1 ([Genomeark download](https://s3.amazonaws.com/genomeark/species/Macaca_nemestrina/mMacNem1/assembly_curated/mMacNem1.hap1.cur.20240610.fasta.gz))
 - Norway rat
   - rn6 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rn6/bigZips/rn6.fa.gz))
   - rn7 ([UCSC download](https://hgdownload.soe.ucsc.edu/goldenPath/rn7/bigZips/rn7.fa.gz))
@@ -45,27 +43,39 @@ Links to genome sequence for target genomes also located in `config/target_genom
 ## Output Structure
 
 Processed data is organized under `output/genomes/` with the following structure:
-The download utility below uses data from the source and target genome .tsv files
-to download the required genome and gene annotations for the runs.
+
 ```
 output/genomes/
 ├── {genome}/              # e.g., rheMac10/
 │   ├── {genome}.fa       # Genome FASTA
 │   └── annotations/      
-│       └── {genome}-{source}-{version}.gtf.gz  # Lifted annotations
+│       └── {target_genome}-{source_genome}-{annotation_version}.gtf.gz
 ```
 
-Running the liftoff wrapper will also create the mapping from human/mouse to the 
-target genomes. 
+### Available Lifted Annotations
 
-Example for rheMac10:
+The following table shows all currently available lifted gene annotations:
+
+| Target Genome | Human (hg38) | Mouse (mm10) |
+|--------------|--------------|--------------|
+| [calJac4](output/genomes/calJac4/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [macFas6](output/genomes/macFas6/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [mCalJac1](output/genomes/mCalJac1/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [mMacNem1](output/genomes/mMacNem1/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [rheMac8](output/genomes/rheMac8/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [rheMac10](output/genomes/rheMac10/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+| [rn6](output/genomes/rn6/annotations) | - | gencode.vM25.basic, gencode.vM25.comp |
+| [rn7](output/genomes/rn7/annotations) | - | gencode.vM25.basic, gencode.vM25.comp |
+| [susScr11](output/genomes/susScr11/annotations) | gencode.v44.basic, gencode.v47.basic, gencode.v47.comp | - |
+
+Each annotation is available as a gzipped GTF file in the respective genome's annotations directory. For example:
 ```
 rheMac10/
 ├── rheMac10.fa
 └── annotations/
     ├── rheMac10-hg38-gencode.v47.basic.gtf.gz
     ├── rheMac10-hg38-gencode.v47.comp.gtf.gz
-    └── rheMac10-mm10-gencode.vM25.gtf.gz
+    └── rheMac10-mm10-gencode.vM25.basic.gtf.gz
 ```
 
 ## Usage
@@ -73,11 +83,6 @@ rheMac10/
 ### Requirements
 - Install dependencies using provided conda environment:
 ```bash
-# clone the repository
-git clone git@github.com:pfenninglab/custom_ArchR_genomes_and_annotations.git
-cd custom_ArchR_genomes_and_annotations
-
-# create conda environment from config file
 conda env create -f config/conda_environment.yml
 ```
 
@@ -85,7 +90,7 @@ conda env create -f config/conda_environment.yml
 
 1. Download source/target genomes:
 ```bash
-bash scripts/download-genome.sh -g rheMac10 \
+./scripts/download-genome.sh -g rheMac10 \
   -f https://hgdownload.soe.ucsc.edu/goldenPath/rheMac10/bigZips/rheMac10.fa.gz \
   -n gencode.v47.basic \
   -t https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/gencode.v47.basic.annotation.gtf.gz
@@ -93,7 +98,7 @@ bash scripts/download-genome.sh -g rheMac10 \
 
 2. Run Liftoff gene mapping:
 ```bash
-bash scripts/liftoff-genes.sh -s hg38 -t rheMac10 -a gencode.v47.basic
+./scripts/liftoff-genes.sh -s hg38 -t rheMac10 -a gencode.v47.basic
 ```
 
 ## Citations
@@ -106,13 +111,6 @@ If you use these resources, please cite:
 ```
 Phan, BaDoi; Pfenning, Andreas (2022): Alternate gene annotations for rat, macaque, and marmoset for single cell RNA and ATAC analyses.
 Carnegie Mellon University. Dataset. https://doi.org/10.1184/R1/21176401.v1
-```
-
-## Internal Usage
-If you are a Pfenning lab member with access to the Lane cluster, this repository
-and all final github files and intermediate files are located at
-```bash
-cd /home/bnphan/repos/custom_ArchR_genomes_and_annotations
 ```
 
 ## Contributing
