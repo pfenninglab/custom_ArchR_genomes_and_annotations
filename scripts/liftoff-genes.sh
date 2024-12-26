@@ -81,7 +81,7 @@ SOURCE_FA="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa"
 TARGET_FA="$PROJECT_DIR/output/genomes/$TARGET_GENOME/$TARGET_GENOME.fa"
 SOURCE_GTF="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf"
 OUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/annotations"
-OUT_PREFIX="${TARGET_GENOME}-${SOURCE_ANNOT}-${SOURCE_ANNOT}"
+OUT_PREFIX="${TARGET_GENOME}-${TARGET_GENOME}-${SOURCE_ANNOT}"
 
 # Check if output already exists
 if [[ -f "$OUT_DIR/${OUT_PREFIX}.gtf.gz" ]] && [[ -f "$OUT_DIR/${OUT_PREFIX}.gff3.gz" ]]; then
