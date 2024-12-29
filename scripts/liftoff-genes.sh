@@ -29,6 +29,28 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
 }
 
+# Function to check for gene features in GTF
+check_gene_feature() {
+    local gtf_file="$1"
+    log "Checking first 1000 lines for gene features in GTF..."
+    
+    # Check if file is compressed and count gene features
+    if [[ "$gtf_file" =~ \.gz$ ]]; then
+        gene_count=$(zcat "$gtf_file" | head -n 1000 | awk '$3=="gene"' | wc -l)
+    else
+        gene_count=$(head -n 1000 "$gtf_file" | awk '$3=="gene"' | wc -l)
+    fi
+        
+    # Log the finding
+    if [ "$gene_count" -gt 0 ]; then
+        log "Found $gene_count gene features in GTF"
+    else
+        log "No gene features found in first 1000 lines, will use -infer_genes"
+    fi
+
+    echo "$gene_count"  # Return the actual count
+}
+
 # Function to handle input files
 handle_input_file() {
     local file="$1"
@@ -104,14 +126,20 @@ handle_input_file "$SOURCE_FA"
 handle_input_file "$TARGET_FA" 
 handle_input_file "$SOURCE_GTF"
 
-# Run liftoff
+# Set up liftoff command and add input files to command
 log "Running liftoff..."
-liftoff -p $N_CORES \
-    -g "$(basename "$SOURCE_GTF")" \
-    -o "${OUT_PREFIX}.gff3" \
-    -dir "$TEMP_DIR" \
-    "$(basename "$TARGET_FA" .gz)" \
-    "$(basename "$SOURCE_FA" .gz)"
+LIFTOFF_ARGS="-p $N_CORES -g $(basename "$SOURCE_GTF") -o ${OUT_PREFIX}.gff3 -dir $TEMP_DIR $(basename "$TARGET_FA" .gz) $(basename "$SOURCE_FA" .gz)"
+
+# Check GTF and add -infer_genes if needed
+gene_count=$(check_gene_feature "$(basename "$SOURCE_GTF")" | tail -1 )
+if [ "$gene_count" -eq 0 ]; then
+    log "Adding -infer_genes flag to liftoff command"
+    LIFTOFF_ARGS="-infer_genes $LIFTOFF_ARGS"
+fi
+
+# Run liftoff with constructed arguments
+log "Running liftoff with args: $LIFTOFF_ARGS"
+liftoff $LIFTOFF_ARGS
 
 # Convert GFF3 to GTF
 log "Converting GFF3 to GTF..."
@@ -132,4 +160,3 @@ rm -rf "$TEMP_DIR"
 
 log "Liftoff mapping complete"
 conda deactivate
-
