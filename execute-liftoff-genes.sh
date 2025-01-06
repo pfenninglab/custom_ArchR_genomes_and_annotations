@@ -37,11 +37,6 @@ for i in $(seq 2 5); do
         row=$(awk -v line=$j 'NR==line' "$targets_file")
         target_genome=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
         
-        # Skip if source and target are the same
-        if [[ "$source_genome" == "$target_genome" ]]; then
-            continue
-        fi
-        
         echo "Submitting liftoff job for: $source_genome -> $target_genome"
         
         # Submit SLURM job
@@ -69,11 +64,6 @@ for i in $(seq 6 8); do
         # Parse target genome info
         row=$(awk -v line=$j 'NR==line' "$targets_file")
         target_genome=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
-        
-        # Skip if source and target are the same
-        if [[ "$source_genome" == "$target_genome" ]]; then
-            continue
-        fi
         
         echo "Submitting liftoff job for: $source_genome -> $target_genome"
         
