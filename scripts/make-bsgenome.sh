@@ -49,6 +49,26 @@ validate_package_name() {
     fi
 }
 
+make_names() {
+    local input="$1"
+    
+    # Step 1: Replace non-alphanumeric characters (except underscores) with a period
+    local name=$(echo "$input" | sed 's/[^a-zA-Z0-9.]//g')
+
+    # Step 2: Replace multiple consecutive periods with a single period
+    name=$(echo "$name" | sed 's/\.\+/\./g')
+
+    # Step 3: Trim leading and trailing periods
+    name=$(echo "$name" | sed 's/^\.//; s/\.$//')
+
+    # Step 4: Ensure the name is not empty; use "X" as a fallback
+    if [[ -z "$name" ]]; then
+        name="X"
+    fi
+
+    echo "$name"
+}
+
 # Parse command line arguments
 while getopts "s:g:f:o:n:p:w:h" opt; do
     case $opt in
@@ -63,6 +83,19 @@ while getopts "s:g:f:o:n:p:w:h" opt; do
         ?) usage ;;
     esac
 done
+
+# Activate conda environment with liftoff
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate custom_genes
+
+# Log all variables
+log "SPECIES: $SPECIES"
+log "GENOME: $GENOME"
+log "FASTA: $FASTA"
+log "OUTPUT_DIR: $OUTPUT_DIR"
+log "PKG_NAME: $PKG_NAME"
+log "PROJECT_DIR: $PROJECT_DIR"
+log "SCRATCH_DIR: ${SCRATCH_DIR:-/scratch/$USER}"
 
 # Check required arguments
 if [[ -z "${SPECIES:-}" || -z "${GENOME:-}" || -z "${FASTA:-}" || \
@@ -141,7 +174,7 @@ if [[ ! -f "$TWOBIT_FILE" ]]; then
     # Convert
     TWOBIT_FILE=$(basename "$FASTA")
     faToTwoBit "$FASTA" "$TWOBIT_FILE"
-    rsync -Paq $TWOBIT_FILE $PROJECT_DIR/output/genomes/$GENOME
+    rsync -Paq $TWOBIT_FILE $PROJECT_DIR/output/genomes/${GENOME}/
 else 
     log "2bit file already exists, grabbing from output directory..."
     rsync -Paq $PROJECT_DIR/output/genomes/$GENOME/$GENOME.2bit $TEMP_DIR
@@ -158,17 +191,16 @@ Rscript "$SCRIPTS_DIR/make-bsgenome.R" \
     "$TEMP_DIR" \
     "$PKG_NAME"
 
+PKG_NAME=$(make_names $PKG_NAME)
+
 # Build and install R package
 if [[ -d "$PKG_NAME" ]]; then
     log "Building R package..."    
     R CMD build "$PKG_NAME"
+    R CMD INSTALL "${PKG_NAME}_1.0.0.tar.gz"
 
     # Copy package tar to output directory
-    rsync -Paq ${PKG_NAME}_1.0.0.tar.gz $OUTPUT_DIR
-    if [[ $? -eq 0 ]]; then
-        log "Installing R package..."
-        R CMD INSTALL "${PKG_NAME}_1.0.0.tar.gz"
-    fi
+    rsync -Pav "${PKG_NAME}_1.0.0.tar.gz" ${OUTPUT_DIR}/
 fi
 
 # Cleanup
