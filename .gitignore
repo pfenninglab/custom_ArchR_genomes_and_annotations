@@ -29,3 +29,5 @@ sjdb*
 hg38/
 mm10/
 liftover/
+star_index/
+chromap_index/
