@@ -172,7 +172,7 @@ if [[ ! -f "$TWOBIT_FILE" ]]; then
     fi
 
     # Convert
-    TWOBIT_FILE=$(basename "$FASTA")
+    TWOBIT_FILE=$(basename "$FASTA" .fa).2bit
     faToTwoBit "$FASTA" "$TWOBIT_FILE"
     rsync -Paq $TWOBIT_FILE $PROJECT_DIR/output/genomes/${GENOME}/
 else 
