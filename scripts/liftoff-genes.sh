@@ -201,7 +201,9 @@ LIFTOFF_ARGS="-p ${N_CORES} -g ${FILTERED_GTF} -o ${OUT_PREFIX}.gff3 -dir ${TEMP
 
 # Check GTF and add -infer_genes if needed
 gene_count=$(check_gene_feature "$FILTERED_GTF" | tail -1)
-if [ "$gene_count" -eq 0 ]; then
+log "Gene count detected in GTF: $gene_count"
+
+if [ "$gene_count" = "0" ]; then
     log "Adding -infer_genes flag to liftoff command"
     LIFTOFF_ARGS="-infer_genes $LIFTOFF_ARGS"
 fi
@@ -219,7 +221,7 @@ gzip -f "${OUT_PREFIX}.gff3" "${OUT_PREFIX}.gtf"
 
 # Move results to final location
 log "Moving results to output directory..."
-rsync -av --remove-source-files "${OUT_PREFIX}.*.gz" "$OUT_DIR/"
+rsync -av --remove-source-files ${OUT_PREFIX}.*.gz $OUT_DIR/
 
 # Clean up
 rm -rf "$TEMP_DIR"
