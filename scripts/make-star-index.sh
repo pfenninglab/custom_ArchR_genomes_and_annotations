@@ -7,6 +7,7 @@
 #SBATCH --mem=64G
 #SBATCH --error=logs/%x_%j.txt
 #SBATCH --output=logs/%x_%j.txt
+
 #
 # Build STAR genome index with proper scratch directory handling and error checking
 # Supports both gzipped and uncompressed input files
@@ -52,19 +53,6 @@ handle_input_file() {
     fi
 }
 
-# Function to clean up scratch directory
-cleanup() {
-    local exit_code=$?
-    log "Cleaning up scratch directory..."
-    if [ -d "$TEMP_DIR" ]; then
-        rm -rf "$TEMP_DIR"
-    fi
-    exit $exit_code
-}
-
-# Set up cleanup trap
-trap cleanup EXIT
-
 # Parse command line arguments
 while getopts "g:f:t:o:p:w:m:h" opt; do
     case $opt in
@@ -79,6 +67,7 @@ while getopts "g:f:t:o:p:w:m:h" opt; do
     esac
 done
 
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate custom_genes
 
 # Check required arguments
@@ -114,6 +103,18 @@ TEMP_OUTPUT="${TEMP_DIR}/output"
 log "Creating temporary directories..."
 mkdir -p "$TEMP_INPUT" "$TEMP_OUTPUT"
 
+# Function to clean up scratch directory
+cleanup() {
+    local exit_code=$?
+    log "Cleaning up scratch directory..."
+    if [ -d "$TEMP_DIR" ]; then
+        rm -rf "$TEMP_DIR"
+    fi
+    exit $exit_code
+}
+
+# Set up cleanup trap
+trap cleanup EXIT
 # Change to input directory for file handling
 cd "$TEMP_INPUT"
 

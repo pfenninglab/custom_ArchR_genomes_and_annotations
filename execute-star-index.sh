@@ -3,8 +3,6 @@
 # Execute STAR index generation for all valid source-target genome combinations
 #
 
-set -euo pipefail
-
 PROJECT_DIR=${1:-$HOME/repos/custom_ArchR_genomes_and_annotations}
 SCRATCH_DIR=${2:-/scratch/$USER}
 
@@ -45,7 +43,7 @@ for j in $(seq 2 10); do
     OUTPUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
 
     # Check if files exist and STAR index doesn't
-    if [[ -f "$GTF" && -f "$FASTA" && ! -d "$OUTPUT_DIR" ]]; then
+    if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
         log "Submitting STAR index job for: $OUT_PREFIX"
         
         # Submit SLURM job
@@ -90,7 +88,7 @@ for j in $(seq 11 12); do
     OUTPUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
 
     # Check if files exist and STAR index doesn't
-    if [[ -f "$GTF" && -f "$FASTA" && ! -d "$OUTPUT_DIR" ]]; then
+    if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
         log "Submitting STAR index job for: $OUT_PREFIX"
         
         sbatch --job-name="star_${OUT_PREFIX}" \
