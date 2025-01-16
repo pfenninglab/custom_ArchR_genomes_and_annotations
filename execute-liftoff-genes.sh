@@ -26,53 +26,52 @@ mkdir -p "$PROJECT_DIR/logs"
 for i in $(seq 2 5); do
     # Parse source genome info
     row=$(awk -v line=$i 'NR==line' "$config_file")
-    source_genome=$(echo "$row" | awk -F'\t' '{print $2}')
-    annot_file=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
-    annot_name=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
+    SOURCE_GENOME=$(echo "$row" | awk -F'\t' '{print $2}')
+    SOURCE_ANNOT=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
     
     # Loop through target genomes
     # for j in $(seq 2 $num_targets); do
-    for j in $(seq 2 8); do
+    for j in $(seq 2 10); do
         # Parse target genome info
         row=$(awk -v line=$j 'NR==line' "$targets_file")
-        target_genome=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
+        TARGET_GENOME=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
         
-        echo "Submitting liftoff job for: $source_genome -> $target_genome"
+        echo "Submitting liftoff job for: $SOURCE_GENOME -> $TARGET_GENOME"
         
         # Submit SLURM job
-        sbatch --job-name="liftoff_${source_genome}_${target_genome}" \
+        sbatch --job-name="liftoff_${SOURCE_GENOME}_${TARGET_GENOME}" \
             "$PROJECT_DIR/scripts/liftoff-genes.sh" \
-            -s "$source_genome" \
-            -t "$target_genome" \
-            -a "$annot_name" \
+            -s "$SOURCE_GENOME" \
+            -t "$TARGET_GENOME" \
+            -a "$SOURCE_ANNOT" \
             -p "$PROJECT_DIR" \
             -w "$SCRATCH_DIR"
     done
 done
 
+
 # for the mouse gene annotations to rats
 for i in $(seq 6 8); do
     # Parse source genome info
     row=$(awk -v line=$i 'NR==line' "$config_file")
-    source_genome=$(echo "$row" | awk -F'\t' '{print $2}')
-    annot_file=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
-    annot_name=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
+    SOURCE_GENOME=$(echo "$row" | awk -F'\t' '{print $2}')
+    SOURCE_ANNOT=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
     
     # Loop through target genomes
     # for j in $(seq 2 $num_targets); do
-    for j in $(seq 9 10); do
+    for j in $(seq 11 12); do
         # Parse target genome info
         row=$(awk -v line=$j 'NR==line' "$targets_file")
-        target_genome=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
+        TARGET_GENOME=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
         
-        echo "Submitting liftoff job for: $source_genome -> $target_genome"
+        echo "Submitting liftoff job for: $SOURCE_GENOME -> $TARGET_GENOME"
         
         # Submit SLURM job
-        sbatch --job-name="liftoff_${source_genome}_${target_genome}" \
+        sbatch --job-name="liftoff_${SOURCE_GENOME}_${TARGET_GENOME}" \
             "$PROJECT_DIR/scripts/liftoff-genes.sh" \
-            -s "$source_genome" \
-            -t "$target_genome" \
-            -a "$annot_name" \
+            -s "$SOURCE_GENOME" \
+            -t "$TARGET_GENOME" \
+            -a "$SOURCE_ANNOT" \
             -p "$PROJECT_DIR" \
             -w "$SCRATCH_DIR"
     done

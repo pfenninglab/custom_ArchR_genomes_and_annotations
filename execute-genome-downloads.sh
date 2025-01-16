@@ -37,7 +37,7 @@ done
 echo "Processing target genomes..."
 config_file="config/target_genomes.tsv"
 num_targets=$(wc -l < $config_file)
-for i in $(seq 2 $num_targets); do
+for i in $(seq 2 12); do
     # Parse TSV line using awk
     row=$(awk -v line=$i 'NR==line' $config_file)
     genome=$(echo "$row" | awk -F'\t' '{print $2}')

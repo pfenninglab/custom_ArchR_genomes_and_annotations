@@ -3,6 +3,7 @@
 # Execute BSgenome builds from config file
 #
 
+
 PROJECT_DIR=$HOME/repos/custom_ArchR_genomes_and_annotations
 SCRATCH_DIR=/scratch/$USER
 GENOME_DIR=${PROJECT_DIR}/output/genomes
@@ -20,8 +21,8 @@ for i in $(seq 2 $num_genomes); do
     row=$(awk -v line=$i 'NR==line' "$config_file")
     genome=$(echo "$row" | awk -F'\t' '{print $2}')
     species=$(echo "$row" | awk -F'\t' '{print $3}')
-    pgk_name=$(echo "$row" | awk -F'\t' '{print $9}')
     source_file=$(echo "$row" | awk -F'\t' '{print $4}')
+    pgk_name=$(echo "$row" | awk -F'\t' '{print $5}')
     fasta_path=${GENOME_DIR}/${genome}/${genome}.fa.gz
     
     if [ -z "$pgk_name" ]; then
