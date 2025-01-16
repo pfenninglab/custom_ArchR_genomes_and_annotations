@@ -111,4 +111,45 @@ for j in $(seq 11 12); do
     fi
 done
 
+
+
+# Loop through rodent target genomes (lines 9-10 of target config)
+config_file="$PROJECT_DIR/config/source_genomes.tsv"
+for i in 2 6; do
+    # Parse target genome info
+    row=$(awk -v line=$i 'NR==line' "$config_file")
+    SOURCE_GENOME=$(echo "$row" | awk -F'\t' '{print $2}')
+    SOURCE_ANNOT=$(echo "$row" | awk -F'\t' '{print $5}' | tr -d '\r\n')
+    
+    # Construct paths
+    OUT_PREFIX="${SOURCE_GENOME}-${SOURCE_ANNOT}"
+    GTF="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf.gz"
+    FASTA="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa.gz"
+    OUTPUT_DIR="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/star_index/${OUT_PREFIX}"
+
+    # Check if files exist and STAR index doesn't
+    if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
+        log "Submitting STAR index job for: $OUT_PREFIX"
+        
+        sbatch --job-name="star_${OUT_PREFIX}" \
+            --partition pool3-bigmem --mem 64G \
+            --time 24:00:00 \
+            "$PROJECT_DIR/scripts/make-star-index.sh" \
+            -f "$FASTA" \
+            -t "$GTF" \
+            -o "$OUTPUT_DIR"
+    else
+        if [[ ! -f "$GTF" ]]; then
+            log "WARNING: Missing lifted GTF: $GTF"
+        fi
+        if [[ ! -f "$FASTA" ]]; then
+            log "WARNING: Missing genome FASTA: $FASTA"
+        fi
+        if [[ -d "$OUTPUT_DIR" ]]; then
+            log "STAR index already exists: $OUTPUT_DIR"
+        fi
+    fi
+done
+
+
 log "All STAR index jobs submitted"

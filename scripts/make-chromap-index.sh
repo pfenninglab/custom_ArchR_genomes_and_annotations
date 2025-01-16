@@ -116,7 +116,7 @@ fi
 
 # Copy results back to output directory
 log "Copying index to output directory..."
-if ! rsync -P index "$OUTPUT_DIR/"; then
+if ! rsync -Paq index "$OUTPUT_DIR/"; then
     log "ERROR: Failed to copy index to output directory"
     rm -rf "$TEMP_DIR"
     exit 1
