@@ -108,19 +108,11 @@ fi
 
 # Create Chromap index for snATAC-seq
 log "Creating Chromap index for snATAC-seq..."
-if ! chromap -i -r "$FASTA_BASE" -o index; then
-    log "ERROR: Failed to create Chromap index"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
+chromap -i -r "$FASTA_BASE" -o index
 
 # Copy results back to output directory
 log "Copying index to output directory..."
-if ! rsync -Paq index "$OUTPUT_DIR/"; then
-    log "ERROR: Failed to copy index to output directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
+rsync -Paq --remove-source-files index $OUTPUT_DIR
 
 # Cleanup
 log "Cleaning up temporary files..."

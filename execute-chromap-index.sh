@@ -19,60 +19,60 @@ log "Processing genomes..."
 config_file="config/target_genomes.tsv"
 num_genomes=$(wc -l < "$config_file")
 
-# Process each genome starting from line 2 (skip header)
+# Process each GENOME starting from line 2 (skip header)
 for i in $(seq 2 12); do
     # Parse TSV line using awk
     row=$(awk -v line="$i" 'NR==line' "$config_file")
-    genome=$(echo "$row" | awk -F'\t' '{print $2}')
-    fasta_path="${GENOME_DIR}/${genome}/${genome}.fa.gz"
-    output_dir="${GENOME_DIR}/${genome}/chromap_index"
+    GENOME=$(echo "$row" | awk -F'\t' '{print $2}')
+    FASTA="${GENOME_DIR}/${GENOME}/${GENOME}.fa.gz"
+    OUTPUT_DIR="${GENOME_DIR}/${GENOME}/chromap_index"
     
     # Skip if index already exists
-    if [[ -f "${output_dir}/index" ]]; then
-        log "Chromap index already exists for ${genome}, skipping..."
+    if [[ -f "${OUTPUT_DIR}/index" ]]; then
+        log "Chromap index already exists for ${GENOME}, skipping..."
         continue
     fi
     
     # Check if FASTA exists
-    if [[ ! -f "$fasta_path" ]]; then
-        log "WARNING: FASTA file not found for ${genome} at ${fasta_path}, skipping..."
+    if [[ ! -f "$FASTA" ]]; then
+        log "WARNING: FASTA file not found for ${GENOME} at ${FASTA}, skipping..."
         continue
     fi
     
-    log "Submitting job for genome: $genome"
-    sbatch --job-name="chromap_${genome}" scripts/make-chromap-index.sh \
-        -g "$genome" \
-        -f "$fasta_path" \
-        -o "$output_dir" \
+    log "Submitting job for GENOME: $GENOME"
+    sbatch --job-name="chromap_${GENOME}" scripts/make-chromap-index.sh \
+        -g "$GENOME" \
+        -f "$FASTA" \
+        -o "$OUTPUT_DIR" \
         -w "$SCRATCH_DIR"
 done
 
 
 # do this for the human and mouse genomes
 config_file="config/source_genomes.tsv"
-# Process each genome starting from line 2 (skip header)
+# Process each GENOME starting from line 2 (skip header)
 for i in 2 6; do
     # Parse TSV line using awk
     row=$(awk -v line="$i" 'NR==line' "$config_file")
-    genome=$(echo "$row" | awk -F'\t' '{print $2}')
-    fasta_path="${GENOME_DIR}/${genome}/${genome}.fa.gz"
-    output_dir="${GENOME_DIR}/${genome}/chromap_index"
+    GENOME=$(echo "$row" | awk -F'\t' '{print $2}')
+    fasta_path="${GENOME_DIR}/${GENOME}/${GENOME}.fa.gz"
+    output_dir="${GENOME_DIR}/${GENOME}/chromap_index"
     
     # Skip if index already exists
     if [[ -f "${output_dir}/index" ]]; then
-        log "Chromap index already exists for ${genome}, skipping..."
+        log "Chromap index already exists for ${GENOME}, skipping..."
         continue
     fi
     
     # Check if FASTA exists
     if [[ ! -f "$fasta_path" ]]; then
-        log "WARNING: FASTA file not found for ${genome} at ${fasta_path}, skipping..."
+        log "WARNING: FASTA file not found for ${GENOME} at ${fasta_path}, skipping..."
         continue
     fi
     
-    log "Submitting job for genome: $genome"
-    sbatch --job-name="chromap_${genome}" scripts/make-chromap-index.sh \
-        -g "$genome" \
+    log "Submitting job for GENOME: $GENOME"
+    sbatch --job-name="chromap_${GENOME}" scripts/make-chromap-index.sh \
+        -g "$GENOME" \
         -f "$fasta_path" \
         -o "$output_dir" \
         -w "$SCRATCH_DIR"
