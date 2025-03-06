@@ -155,14 +155,14 @@ log "Memory requested: ${MEM_GB}GB, using ${N_CORES} cores"
 # Set up directories
 PROJECT_DIR=${PROJECT_DIR:-$(pwd)}
 SCRATCH_DIR=${SCRATCH_DIR:-/scratch/$USER}
-OUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/annotations"
+OUT_DIR="$PROJECT_DIR/genomes/$TARGET_GENOME/annotations"
 OUT_PREFIX="${TARGET_GENOME}-${SOURCE_GENOME}-${SOURCE_ANNOT}"
 TEMP_DIR="$SCRATCH_DIR/${OUT_PREFIX}-${SLURM_JOB_ID}"
 
 # Define paths
-SOURCE_FA="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa"
-TARGET_FA="$PROJECT_DIR/output/genomes/$TARGET_GENOME/$TARGET_GENOME.fa"
-SOURCE_GTF="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf"
+SOURCE_FA="$PROJECT_DIR/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa"
+TARGET_FA="$PROJECT_DIR/genomes/$TARGET_GENOME/$TARGET_GENOME.fa"
+SOURCE_GTF="$PROJECT_DIR/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf"
 
 # Check if output already exists
 log "Checking if output files already exist..."
@@ -197,7 +197,7 @@ FILTERED_GTF="$TEMP_DIR/filtered/${SOURCE_GTF_BASE%.gtf}.filtered.gtf"
 filter_main_chromosomes "$SOURCE_GTF_BASE" "$FILTERED_GTF"
 
 # Set up liftoff command
-LIFTOFF_ARGS="-p ${N_CORES} -g ${FILTERED_GTF} -o ${OUT_PREFIX}.gff3 -dir ${TEMP_DIR}/output $TARGET_FA_BASE $SOURCE_FA_BASE"
+LIFTOFF_ARGS="-p ${N_CORES} -g ${FILTERED_GTF} -o ${OUT_PREFIX}.gff3 -dir ${TEMP_DIR} $TARGET_FA_BASE $SOURCE_FA_BASE"
 
 # Check GTF and add -infer_genes if needed
 gene_count=$(check_gene_feature "$FILTERED_GTF" | tail -1)

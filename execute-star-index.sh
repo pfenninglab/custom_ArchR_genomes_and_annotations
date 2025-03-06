@@ -38,9 +38,9 @@ for j in $(seq 2 10); do
     
     # Construct paths
     OUT_PREFIX="${TARGET_GENOME}-${SOURCE_GENOME}-${SOURCE_ANNOT}"
-    GTF="$PROJECT_DIR/output/genomes/$TARGET_GENOME/annotations/${OUT_PREFIX}.gtf.gz"
-    FASTA="$PROJECT_DIR/output/genomes/$TARGET_GENOME/$TARGET_GENOME.fa.gz"
-    OUTPUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
+    GTF="$PROJECT_DIR/genomes/$TARGET_GENOME/annotations/${OUT_PREFIX}.gtf.gz"
+    FASTA="$PROJECT_DIR/genomes/$TARGET_GENOME/$TARGET_GENOME.fa.gz"
+    OUTPUT_DIR="$PROJECT_DIR/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
 
     # Check if files exist and STAR index doesn't
     if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
@@ -48,7 +48,7 @@ for j in $(seq 2 10); do
         
         # Submit SLURM job
         sbatch --job-name="star_${OUT_PREFIX}" \
-            --partition pool3-bigmem --mem 64G \
+            --partition pool3-bigmem --mem 96G \
             --time 24:00:00 \
             "$PROJECT_DIR/scripts/make-star-index.sh" \
             -f "$FASTA" \
@@ -83,16 +83,16 @@ for j in $(seq 11 12); do
     
     # Construct paths
     OUT_PREFIX="${TARGET_GENOME}-${SOURCE_GENOME}-${SOURCE_ANNOT}"
-    GTF="$PROJECT_DIR/output/genomes/$TARGET_GENOME/annotations/${OUT_PREFIX}.gtf.gz"
-    FASTA="$PROJECT_DIR/output/genomes/$TARGET_GENOME/$TARGET_GENOME.fa.gz"
-    OUTPUT_DIR="$PROJECT_DIR/output/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
+    GTF="$PROJECT_DIR/genomes/$TARGET_GENOME/annotations/${OUT_PREFIX}.gtf.gz"
+    FASTA="$PROJECT_DIR/genomes/$TARGET_GENOME/$TARGET_GENOME.fa.gz"
+    OUTPUT_DIR="$PROJECT_DIR/genomes/$TARGET_GENOME/star_index/${OUT_PREFIX}"
 
     # Check if files exist and STAR index doesn't
     if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
         log "Submitting STAR index job for: $OUT_PREFIX"
         
         sbatch --job-name="star_${OUT_PREFIX}" \
-            --partition pool3-bigmem --mem 64G \
+            --partition pool3-bigmem --mem 96G \
             --time 24:00:00 \
             "$PROJECT_DIR/scripts/make-star-index.sh" \
             -f "$FASTA" \
@@ -123,16 +123,16 @@ for i in 2 6; do
     
     # Construct paths
     OUT_PREFIX="${SOURCE_GENOME}-${SOURCE_ANNOT}"
-    GTF="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf.gz"
-    FASTA="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa.gz"
-    OUTPUT_DIR="$PROJECT_DIR/output/genomes/$SOURCE_GENOME/star_index/${OUT_PREFIX}"
+    GTF="$PROJECT_DIR/genomes/$SOURCE_GENOME/annotations/${SOURCE_ANNOT}.gtf.gz"
+    FASTA="$PROJECT_DIR/genomes/$SOURCE_GENOME/$SOURCE_GENOME.fa.gz"
+    OUTPUT_DIR="$PROJECT_DIR/genomes/$SOURCE_GENOME/star_index/${OUT_PREFIX}"
 
     # Check if files exist and STAR index doesn't
     if [[ -f "$GTF" && -f "$FASTA" && ! -f "$OUTPUT_DIR/Genome" ]]; then
         log "Submitting STAR index job for: $OUT_PREFIX"
         
         sbatch --job-name="star_${OUT_PREFIX}" \
-            --partition pool3-bigmem --mem 64G \
+            --partition pool3-bigmem --mem 96G \
             --time 24:00:00 \
             "$PROJECT_DIR/scripts/make-star-index.sh" \
             -f "$FASTA" \

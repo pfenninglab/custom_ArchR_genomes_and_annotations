@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --partition=pool1
+#SBATCH --partition=pfen1
 #SBATCH --time=4:00:00
 #SBATCH --export=ALL
-#SBATCH --mem=24G
+#SBATCH --mem=100G
 #SBATCH --error=logs/%x_%j.txt
 #SBATCH --output=logs/%x_%j.txt
 

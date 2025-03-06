@@ -1,10 +1,8 @@
 #!/bin/bash
 #!/bin/bash
-#SBATCH --partition=pool3-bigmem,pfen3
+#SBATCH --partition=pool3-bigmem
 #SBATCH --time=24:00:00
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem=64G
+#SBATCH --mem=120G
 #SBATCH --error=logs/%x_%j.txt
 #SBATCH --output=logs/%x_%j.txt
 
@@ -15,6 +13,7 @@
 
 # Exit on error, undefined variables, and pipe failures
 set -euo pipefail
+ulimit -u 64000
 
 # Function to print usage
 usage() {
@@ -98,7 +97,7 @@ done
 # Set up directories
 TEMP_DIR="${SCRATCH_DIR}/star_${SLURM_JOB_ID}"
 TEMP_INPUT="${TEMP_DIR}/input"
-TEMP_OUTPUT="${TEMP_DIR}/output"
+TEMP_OUTPUT="${TEMP_DIR}"
 
 log "Creating temporary directories..."
 mkdir -p "$TEMP_INPUT" "$TEMP_OUTPUT"

@@ -7,7 +7,7 @@ PROJECT_DIR=${1:-$HOME/repos/custom_ArchR_genomes_and_annotations}
 SCRATCH_DIR=${2:-/scratch/$USER}
 
 echo "Project directory: $PROJECT_DIR"
-echo "Scratch directory: $SCRATCH_DIR"
+echo "Scratch diectory: $SCRATCH_DIR"
 
 # Process source genomes config
 echo "Reading source genomes config..."
@@ -31,7 +31,7 @@ for i in $(seq 2 5); do
     
     # Loop through target genomes
     # for j in $(seq 2 $num_targets); do
-    for j in $(seq 2 10); do
+    for j in $(seq 2 11); do
         # Parse target genome info
         row=$(awk -v line=$j 'NR==line' "$targets_file")
         TARGET_GENOME=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')
@@ -59,7 +59,7 @@ for i in $(seq 6 8); do
     
     # Loop through target genomes
     # for j in $(seq 2 $num_targets); do
-    for j in $(seq 11 12); do
+    for j in $(seq 12 13); do
         # Parse target genome info
         row=$(awk -v line=$j 'NR==line' "$targets_file")
         TARGET_GENOME=$(echo "$row" | awk -F'\t' '{print $2}' | tr -d '\r\n')

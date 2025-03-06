@@ -49,7 +49,7 @@ check_file() {
     local basename="$1"
     local dir="$2"
     local scratch_path="$SCRATCH_DIR/$dir/$basename"
-    local project_path="$PROJECT_DIR/output/genomes/$dir/$basename"
+    local project_path="$PROJECT_DIR/genomes/$dir/$basename"
     
     [[ -f "$scratch_path" ]] || [[ -f "$project_path" ]]
 }
@@ -58,7 +58,7 @@ check_file() {
 sync_file() {
     local source_file="$1"
     local relative_path="${source_file#$SCRATCH_DIR/}"
-    local target_dir="$PROJECT_DIR/output/genomes/$(dirname "$relative_path")"
+    local target_dir="$PROJECT_DIR/genomes/$(dirname "$relative_path")"
     
     if [[ "$SCRATCH_DIR" != "$PROJECT_DIR" ]]; then
         log "Syncing file to project directory: $(basename "$source_file")"

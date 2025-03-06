@@ -5,7 +5,7 @@
 
 PROJECT_DIR=$HOME/repos/custom_ArchR_genomes_and_annotations
 SCRATCH_DIR=/scratch/$USER
-GENOME_DIR=${PROJECT_DIR}/output/genomes
+GENOME_DIR=${PROJECT_DIR}/genomes
 
 # Function to log messages with timestamps
 log() {
@@ -20,7 +20,7 @@ config_file="config/target_genomes.tsv"
 num_genomes=$(wc -l < "$config_file")
 
 # Process each GENOME starting from line 2 (skip header)
-for i in $(seq 2 12); do
+for i in $(seq 2 13); do
     # Parse TSV line using awk
     row=$(awk -v line="$i" 'NR==line' "$config_file")
     GENOME=$(echo "$row" | awk -F'\t' '{print $2}')

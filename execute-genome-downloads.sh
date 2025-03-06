@@ -12,7 +12,7 @@ config_file="config/source_genomes.tsv"
 num_sources=$(wc -l < $config_file)
 conda activate custom_genes
 
-for i in $(seq 2 $num_sources); do
+for i in $(seq 2 8); do
     # Parse TSV line using awk
     row=$(awk -v line=$i 'NR==line' $config_file)
     genome=$(echo "$row" | awk -F'\t' '{print $2}')
@@ -37,7 +37,7 @@ done
 echo "Processing target genomes..."
 config_file="config/target_genomes.tsv"
 num_targets=$(wc -l < $config_file)
-for i in $(seq 2 12); do
+for i in $(seq 2 13); do
     # Parse TSV line using awk
     row=$(awk -v line=$i 'NR==line' $config_file)
     genome=$(echo "$row" | awk -F'\t' '{print $2}')
@@ -64,14 +64,14 @@ for i in $(seq 2 12); do
     # Submit job with chain URLs if any exist
     echo "Submitting job for target genome: $genome"
     if [[ -n "$chain_urls" ]]; then
-        sbatch --job-name="dl_${genome}" scripts/download-genome.sh \
+        sbatch -p pfen1 --job-name="dl_${genome}" scripts/download-genome.sh \
             -g "$genome" \
             -f "$fasta_url" \
             -p "$PROJECT_DIR" \
             -s "$SCRATCH_DIR" \
             -l "$chain_urls"
     else
-        sbatch --job-name="dl_${genome}" scripts/download-genome.sh \
+        sbatch  -p pfen1 --job-name="dl_${genome}" scripts/download-genome.sh \
             -g "$genome" \
             -f "$fasta_url" \
             -p "$PROJECT_DIR" \

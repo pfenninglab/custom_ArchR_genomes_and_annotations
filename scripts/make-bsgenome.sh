@@ -154,7 +154,7 @@ mkdir -p "$TEMP_DIR" "$OUTPUT_DIR"
 cd $TEMP_DIR
 
 # Convert FASTA to 2bit
-TWOBIT_FILE="$PROJECT_DIR/output/genomes/$GENOME/$GENOME.2bit"
+TWOBIT_FILE="$PROJECT_DIR/genomes/$GENOME/$GENOME.2bit"
 if [[ ! -f "$TWOBIT_FILE" ]]; then
     log "Converting FASTA to 2bit format..."
 
@@ -174,10 +174,10 @@ if [[ ! -f "$TWOBIT_FILE" ]]; then
     # Convert
     TWOBIT_FILE=$(basename "$FASTA" .fa).2bit
     faToTwoBit "$FASTA" "$TWOBIT_FILE"
-    rsync -Paq $TWOBIT_FILE $PROJECT_DIR/output/genomes/${GENOME}/
+    rsync -Paq $TWOBIT_FILE $PROJECT_DIR/genomes/${GENOME}/
 else 
     log "2bit file already exists, grabbing from output directory..."
-    rsync -Paq $PROJECT_DIR/output/genomes/$GENOME/$GENOME.2bit $TEMP_DIR
+    rsync -Paq $PROJECT_DIR/genomes/$GENOME/$GENOME.2bit $TEMP_DIR
     TWOBIT_FILE="$TEMP_DIR/$GENOME.2bit"
 fi
 

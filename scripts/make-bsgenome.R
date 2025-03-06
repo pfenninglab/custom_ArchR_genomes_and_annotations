@@ -6,7 +6,7 @@
 #   Rscript script.R <proj_dir> <species_name> <genome_id> <twobit_path> <output_dir> <pkg_name>
 #
 # Example:
-#   Rscript script.R /path/to/project "Macaca nemestrina" mMacNem1 /path/to/genome.2bit /output/dir BSgenome.pkg.name
+#   Rscript script.R /path/to/project "Macaca nemestrina" mMacNem1 /path/to/genome.2bit /dir BSgenome.pkg.name
 #
 # Author: BaDoi Phan
 # Date: December 2024
